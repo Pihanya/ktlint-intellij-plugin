@@ -2,7 +2,7 @@
 
 # ktlint-intellij-plugin Changelog
 
-## [Unreleased]
+## [0.11.0]
 ### Added
 - Support for IDE version 222.*
 

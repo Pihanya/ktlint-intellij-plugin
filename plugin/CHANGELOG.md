@@ -7,6 +7,7 @@
 - Support for IDE version 222.*
 
 ### Changed
+- Upgrade to ktlint 0.47.1
 
 ### Deprecated
 

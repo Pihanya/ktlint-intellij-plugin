@@ -1,14 +1,14 @@
-package com.nbadal.ktlint
+package com.pihanya.ktlint
 
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.ExternalAnnotator
 import com.intellij.lang.annotation.HighlightSeverity
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiFile
-import com.nbadal.ktlint.intentions.DisablePluginIntention
-import com.nbadal.ktlint.intentions.FormatIntention
-import com.nbadal.ktlint.intentions.GlobalDisableRuleIntention
-import com.nbadal.ktlint.intentions.LineDisableIntention
+import com.pihanya.ktlint.intentions.DisablePluginIntention
+import com.pihanya.ktlint.intentions.FormatIntention
+import com.pihanya.ktlint.intentions.GlobalDisableRuleIntention
+import com.pihanya.ktlint.intentions.LineDisableIntention
 import com.pinterest.ktlint.core.LintError
 
 class KtlintAnnotator : ExternalAnnotator<LintResult, List<LintError>>() {

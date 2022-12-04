@@ -1,12 +1,12 @@
-package com.nbadal.ktlint.intentions
+package com.pihanya.ktlint.intentions
 
 import com.intellij.codeInsight.intention.HighPriorityAction
 import com.intellij.codeInsight.intention.impl.BaseIntentionAction
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.project.Project
 import com.intellij.psi.PsiFile
-import com.nbadal.ktlint.config
-import com.nbadal.ktlint.doLint
+import com.pihanya.ktlint.config
+import com.pihanya.ktlint.doLint
 
 class FormatIntention : BaseIntentionAction(), HighPriorityAction {
     override fun getFamilyName() = "ktlint"

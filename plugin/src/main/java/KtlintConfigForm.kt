@@ -6,8 +6,8 @@ import com.intellij.openapi.ui.TextFieldWithBrowseButton
 import com.intellij.ui.IdeBorderFactory
 import com.intellij.ui.TextFieldWithAutoCompletion
 import com.intellij.uiDesigner.core.GridConstraints
-import com.nbadal.ktlint.KtlintConfigStorage
-import com.nbadal.ktlint.KtlintRules
+import com.pihanya.ktlint.KtlintConfigStorage
+import com.pihanya.ktlint.KtlintRules
 import com.pinterest.ktlint.core.RuleSet
 import java.awt.Desktop
 import java.awt.Dimension
@@ -120,7 +120,7 @@ class KtlintConfigForm(private val project: Project, private val config: KtlintC
         // If we're able to launch the browser, show the github button!
         if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
             githubButton.addActionListener {
-                Desktop.getDesktop().browse(URI("https://github.com/nbadal/ktlint-intellij-plugin"))
+                Desktop.getDesktop().browse(URI("https://github.com/Pihanya/ktlint-intellij-plugin"))
             }
         } else {
             githubButton.isVisible = false

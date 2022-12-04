@@ -1,4 +1,4 @@
-package com.nbadal.ktlint
+package com.pihanya.ktlint
 
 import KtlintConfigForm
 import com.intellij.codeInsight.daemon.DaemonCodeAnalyzer
@@ -24,5 +24,5 @@ class KtlintConfig(private val project: Project) : SearchableConfigurable {
 
     override fun getDisplayName() = "ktlint"
 
-    override fun getId() = "com.nbadal.ktlint.config"
+    override fun getId() = "com.pihanya.ktlint.config"
 }

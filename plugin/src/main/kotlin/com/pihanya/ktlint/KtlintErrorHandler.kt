@@ -1,4 +1,4 @@
-package com.nbadal.ktlint
+package com.pihanya.ktlint
 
 import com.intellij.diagnostic.IdeaReportingEvent
 import com.intellij.idea.IdeaLogger

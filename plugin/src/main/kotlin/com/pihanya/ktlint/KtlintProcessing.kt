@@ -1,4 +1,4 @@
-package com.nbadal.ktlint
+package com.pihanya.ktlint
 
 import com.intellij.openapi.command.WriteCommandAction
 import com.intellij.openapi.fileEditor.FileDocumentManager

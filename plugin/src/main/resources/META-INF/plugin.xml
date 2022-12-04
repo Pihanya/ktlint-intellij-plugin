@@ -1,22 +1,22 @@
 <idea-plugin>
-    <id>com.nbadal.ktlint</id>
-    <name>Ktlint (unofficial)</name>
-    <vendor url="https://nbad.al">Nick Badal</vendor>
+    <id>com.pihanya.ktlint</id>
+    <name>Ktlint (by pihanya)</name>
+    <vendor url="https://pihanya.t.me">Mikhail Gostev</vendor>
 
     <depends>com.intellij.modules.platform</depends>
     <depends>org.jetbrains.kotlin</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <externalAnnotator language="kotlin" implementationClass="com.nbadal.ktlint.KtlintAnnotator"/>
-        <postFormatProcessor implementation="com.nbadal.ktlint.KtlintPostFormatProcessor" />
-        <projectService serviceImplementation="com.nbadal.ktlint.KtlintConfigStorage"/>
+        <externalAnnotator language="kotlin" implementationClass="com.pihanya.ktlint.KtlintAnnotator"/>
+        <postFormatProcessor implementation="com.pihanya.ktlint.KtlintPostFormatProcessor" />
+        <projectService serviceImplementation="com.pihanya.ktlint.KtlintConfigStorage"/>
         <projectConfigurable groupId="tools" displayName="ktlint" id="preferences.ktlint"
-                             instance="com.nbadal.ktlint.KtlintConfig"/>
-        <errorHandler implementation="com.nbadal.ktlint.KtlintErrorHandler" />
+                             instance="com.pihanya.ktlint.KtlintConfig"/>
+        <errorHandler implementation="com.pihanya.ktlint.KtlintErrorHandler" />
     </extensions>
 
     <actions>
-        <action id="Ktlint.Format" class="com.nbadal.ktlint.actions.FormatAction"
+        <action id="Ktlint.Format" class="com.pihanya.ktlint.actions.FormatAction"
                 text="Format With Ktlint" description="Apply ktlint formatting to file">
             <add-to-group group-id="RefactoringMenu" />
         </action>

@@ -1,4 +1,4 @@
-package com.nbadal.ktlint
+package com.pihanya.ktlint
 
 import com.pinterest.ktlint.core.KtLint
 

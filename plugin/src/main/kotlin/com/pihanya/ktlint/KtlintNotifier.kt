@@ -1,4 +1,4 @@
-package com.nbadal.ktlint
+package com.pihanya.ktlint
 
 import com.intellij.notification.Notification
 import com.intellij.notification.NotificationAction

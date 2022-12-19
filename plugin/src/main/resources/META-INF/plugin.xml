@@ -17,6 +17,9 @@
         <errorHandler implementation="com.pihanya.ktlint.KtlintErrorHandler"/>
         <notificationGroup id="ktlint" displayType="BALLOON" isLogByDefault="true"
                            bundle="locales.ktlintBundle" key="ktlint.notification.group.title"/>
+        <actionOnSaveInfoProvider implementation="com.nbadal.ktlint.KtlintActionOnSaveInfoProvider"
+                                  order="after FormatOnSaveInfoProvider"/>
+        <actionOnSave implementation="com.nbadal.ktlint.KtlintActionOnSave" order="after FormatOnSaveAction"/>
     </extensions>
 
     <actions>

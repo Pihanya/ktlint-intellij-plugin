@@ -8,11 +8,15 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <externalAnnotator language="kotlin" implementationClass="com.pihanya.ktlint.KtlintAnnotator"/>
-        <postFormatProcessor implementation="com.pihanya.ktlint.KtlintPostFormatProcessor" />
-        <projectService serviceImplementation="com.pihanya.ktlint.KtlintConfigStorage"/>
-        <projectConfigurable groupId="tools" displayName="ktlint" id="preferences.ktlint"
-                             instance="com.pihanya.ktlint.KtlintConfig"/>
-        <errorHandler implementation="com.pihanya.ktlint.KtlintErrorHandler" />
+        <postFormatProcessor implementation="com.pihanya.ktlint.KtlintPostFormatProcessor"/>
+        <projectService serviceImplementation="com.pihanya.ktlint.config.KtlintPluginSettingsV0"/>
+        <projectService serviceImplementation="com.pihanya.ktlint.config.KtlintPluginSettingsV1"/>
+        <projectService serviceImplementation="com.pihanya.ktlint.config.KtlintGlobalSettings"/>
+        <projectConfigurable groupId="tools" displayName="Ktlint" id="preferences.ktlint"
+                             instance="com.pihanya.ktlint.config.KtlintConfig"/>
+        <errorHandler implementation="com.pihanya.ktlint.KtlintErrorHandler"/>
+        <notificationGroup id="ktlint" displayType="BALLOON" isLogByDefault="true"
+                           bundle="locales.ktlintBundle" key="ktlint.notification.group.title"/>
     </extensions>
 
     <actions>

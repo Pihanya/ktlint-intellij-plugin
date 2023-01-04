@@ -3,53 +3,81 @@ package com.pihanya.ktlint
 import com.intellij.lang.annotation.AnnotationHolder
 import com.intellij.lang.annotation.ExternalAnnotator
 import com.intellij.lang.annotation.HighlightSeverity
+import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.util.TextRange
 import com.intellij.psi.PsiFile
-import com.pihanya.ktlint.intentions.DisablePluginIntention
-import com.pihanya.ktlint.intentions.FormatIntention
-import com.pihanya.ktlint.intentions.GlobalDisableRuleIntention
-import com.pihanya.ktlint.intentions.LineDisableIntention
+import com.pihanya.ktlint.config.KtlintPluginSettings
+import com.pihanya.ktlint.config.KtlintPluginSettingsV1.AnnotationMode
+import com.pihanya.ktlint.integration.LintResult
+import com.pihanya.ktlint.integration.RuleId
+import com.pihanya.ktlint.integration.runKtlint
+import com.pihanya.ktlint.intention.DisablePluginIntention
+import com.pihanya.ktlint.intention.FormatIntention
+import com.pihanya.ktlint.intention.GlobalDisableRuleIntention
+import com.pihanya.ktlint.intention.LineDisableIntention
+import com.pihanya.ktlint.util.ktLintConfig
 import com.pinterest.ktlint.core.LintError
 
 class KtlintAnnotator : ExternalAnnotator<LintResult, List<LintError>>() {
-    override fun collectInformation(file: PsiFile): LintResult {
-        val config = file.project.config()
-        if (!config.enableKtlint || config.hideErrors) {
-            return emptyLintResult()
+
+    override fun collectInformation(file: PsiFile, editor: Editor, hasErrors: Boolean): LintResult {
+        val config = file.project.ktLintConfig
+        if (config.enableKtlint.not() || config.annotationMode == AnnotationMode.NONE) {
+            return LintResult.Empty
         }
 
-        return doLint(file, config, false)
+        return runKtlint(file, config)
     }
 
-    override fun doAnnotate(collectedInfo: LintResult): List<LintError> {
-        return collectedInfo.uncorrectedErrors
-    }
+    override fun doAnnotate(collectedInfo: LintResult): List<LintError> =
+        collectedInfo.uncorrectedErrors
 
     override fun apply(file: PsiFile, errors: List<LintError>, holder: AnnotationHolder) {
-        val config = file.project.config()
+        if (errors.isEmpty()) return
 
-        errors.forEach {
-            val errorRange = errorTextRange(file, it)
-            val message = "${it.detail} (${it.ruleId})"
-            val severity = if (config.treatAsErrors) HighlightSeverity.ERROR else HighlightSeverity.WARNING
-
-            holder.createAnnotation(severity, errorRange, message).apply {
-                if (it.canBeAutoCorrected) registerFix(FormatIntention())
-                registerFix(GlobalDisableRuleIntention(it.ruleId))
-                registerFix(LineDisableIntention(it))
-                registerFix(DisablePluginIntention())
-            }
+        val config = file.project.ktLintConfig
+        for (lintError: LintError in errors) {
+            handleLintError(lintError, config, file, holder)
         }
     }
 
-    private fun errorTextRange(file: PsiFile, it: LintError): TextRange {
-        val doc = file.viewProvider.document!!
-        val lineStart = doc.getLineStartOffset(it.line - 1)
-        val errorOffset = lineStart + (it.col - 1)
+    private fun handleLintError(
+        lintError: LintError,
+        config: KtlintPluginSettings,
+        file: PsiFile,
+        annotationHolder: AnnotationHolder,
+    ) {
+        val severity = when (config.annotationMode) {
+            AnnotationMode.ERROR -> HighlightSeverity.ERROR
+            AnnotationMode.WARNING -> HighlightSeverity.WARNING
+            AnnotationMode.NONE -> return // Nothing to do
+        }
+        val errorRange = computeErrorTextRange(file, lintError)
+        val message = "${lintError.detail} (${lintError.ruleId})"
+        annotationHolder.newAnnotation(severity, message).apply {
+            range(errorRange)
+            withFix(DisablePluginIntention())
+            if (lintError.canBeAutoCorrected) {
+                withFix(FormatIntention())
+            }
+            withFix(LineDisableIntention(lintError))
+            withFix(GlobalDisableRuleIntention(RuleId.fromString(lintError.ruleId)))
+        }.create()
+    }
 
-        // Full line range in case we can't discern the indicated element:
-        val fullLineRange = TextRange(lineStart, doc.getLineEndOffset(it.line - 1))
+    private fun computeErrorTextRange(file: PsiFile, lintError: LintError): TextRange {
+        val document = file.viewProvider.document!!
 
-        return file.findElementAt(errorOffset)?.let { TextRange.from(errorOffset, it.textLength) } ?: fullLineRange
+        val lineIdx = lintError.line - 1
+        val colIdx = lintError.col - 1
+
+        val lineStartIdx = document.getLineStartOffset(lineIdx)
+        val lineEndIdx = document.getLineEndOffset(lineIdx)
+
+        val errorOffsetIdx = lineStartIdx + colIdx
+        return file.findElementAt(errorOffsetIdx)
+            ?.let { elem -> TextRange.from(errorOffsetIdx, elem.textLength) }
+            // In case an indicated discern the indicated element return full line range
+            ?: TextRange(lineStartIdx, lineEndIdx)
     }
 }

@@ -6,28 +6,37 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import com.intellij.psi.codeStyle.CodeStyleSettings
 import com.intellij.psi.impl.source.codeStyle.PostFormatProcessor
+import com.pihanya.ktlint.action.formatFileWithKtlint
+import com.pihanya.ktlint.config.KtlintPluginSettings
+import com.pihanya.ktlint.util.ktLintConfig
 
 class KtlintPostFormatProcessor : PostFormatProcessor {
-    override fun processElement(source: PsiElement, settings: CodeStyleSettings) = source // Stub.
+
+    override fun processElement(source: PsiElement, settings: CodeStyleSettings) =
+        source
 
     override fun processText(source: PsiFile, rangeToReformat: TextRange, settings: CodeStyleSettings): TextRange {
-        val config = source.project.config()
-
+        val config = source.project.ktLintConfig
         if (shouldLint(source, config)) {
-            doLint(source, config, true)
+            formatFileWithKtlint(project = source.project, source = source)
         }
-
         return rangeToReformat
     }
 
-    private fun shouldLint(source: PsiFile, config: KtlintConfigStorage) = when {
-        // Skip if disabled
-        (!config.enableKtlint || !config.lintAfterReformat) -> false
-        // Skip if not in project
-        (source.virtualFile == null || !ProjectFileIndex.getInstance(source.project).isInContent(source.virtualFile)) -> false
-        // Skip if it isn't a kotlin file
-        (source.fileType.name != "Kotlin") -> false
+    companion object {
 
-        else -> true
+        // Perform linting when:
+        private fun shouldLint(source: PsiFile, config: KtlintPluginSettings) = when {
+            config.enableKtlint.not() -> false // (1) ... plugin is enabled;
+            config.lintAfterReformat.not() -> false // (2) ... linting after reformat is enabled
+            isInProject(source).not() -> false // (3) ... source file is in project
+            (source.fileType.name != "Kotlin") -> false // (4) ... source file is a Kotlin file
+            else -> true
+        }
+
+        private fun isInProject(source: PsiFile): Boolean {
+            val virtualFile = source.virtualFile ?: return false
+            return ProjectFileIndex.getInstance(source.project).isInContent(virtualFile)
+        }
     }
 }

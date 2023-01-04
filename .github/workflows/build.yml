@@ -54,13 +54,6 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v3
 
-      # Builds secrets file
-      - name: Build secrets file
-        env:
-          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
-        shell: bash
-        run: echo "ROLLBAR_ACCESS_TOKEN=$ROLLBAR_ACCESS_TOKEN" >> secrets.properties
-
       # Cache Gradle dependencies
       - name: Setup Gradle Dependencies Cache
         uses: actions/cache@v3
@@ -77,10 +70,14 @@ jobs:
 
       # Run detekt, ktlint and tests
       - name: Run Linters and Test
+        env:
+          ORG_GRADLE_PROJECT_rollbarAccessToken: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
         run: ./gradlew check
 
       # Run verifyPlugin Gradle task
       - name: Verify Plugin
+        env:
+          ORG_GRADLE_PROJECT_rollbarAccessToken: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
         run: ./gradlew verifyPlugin
 
   # Build plugin with buildPlugin Gradle task and provide the artifact for the next workflow jobs
@@ -106,13 +103,6 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v3
 
-      # Builds secrets file
-      - name: Build secrets file
-        env:
-          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
-        shell: bash
-        run: echo "ROLLBAR_ACCESS_TOKEN=$ROLLBAR_ACCESS_TOKEN" >> secrets.properties
-
       # Cache Gradle Dependencies
       - name: Setup Gradle Dependencies Cache
         uses: actions/cache@v3
@@ -131,10 +121,12 @@ jobs:
       - name: Export Properties
         id: properties
         shell: bash
+        env:
+          ORG_GRADLE_PROJECT_rollbarAccessToken: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
         run: |
           PROPERTIES="$(./gradlew plugin:properties --console=plain -q)"
           VERSION="$(echo "$PROPERTIES" | grep "^version:" | cut -f2- -d ' ')"
-          NAME="$(echo "$PROPERTIES" | grep "^pluginName_:" | cut -f2- -d ' ')"
+          NAME="$(echo "$PROPERTIES" | grep "^rootProject:" | cut -f4- -d ' ' | tr -d \')"
           CHANGELOG="$(./gradlew getChangelog --unreleased --no-header --console=plain -q)"
           CHANGELOG="${CHANGELOG//'%'/'%25'}"
           CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
@@ -148,6 +140,8 @@ jobs:
 
       # Build artifact using buildPlugin Gradle task
       - name: Build Plugin
+        env:
+          ORG_GRADLE_PROJECT_rollbarAccessToken: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
         run: ./gradlew buildPlugin
 
       # Upload plugin artifact to make it available in the next jobs
@@ -155,7 +149,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: plugin-artifact
-          path: ./plugin/build/distributions/${{ needs.build.outputs.artifact }}
+          path: ./build/plugin/distributions/${{ needs.build.outputs.artifact }}
 
   # Verify built plugin using IntelliJ Plugin Verifier tool
   # Requires build job to be passed
@@ -176,13 +170,6 @@ jobs:
       - name: Fetch Sources
         uses: actions/checkout@v3
 
-      # Builds secrets file
-      - name: Build secrets file
-        env:
-          ROLLBAR_ACCESS_TOKEN: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
-        shell: bash
-        run: echo "ROLLBAR_ACCESS_TOKEN=$ROLLBAR_ACCESS_TOKEN" >> secrets.properties
-
       # Cache Gradle Dependencies
       - name: Setup Gradle Dependencies Cache
         uses: actions/cache@v3
@@ -201,6 +188,8 @@ jobs:
       - name: Export Properties
         id: properties
         shell: bash
+        env:
+          ORG_GRADLE_PROJECT_rollbarAccessToken: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
         run: |
           PROPERTIES="$(./gradlew plugin:properties --console=plain -q)"
           IDE_VERSIONS="$(echo "$PROPERTIES" | grep "^pluginVerifierIdeVersions:" | base64)"
@@ -217,6 +206,8 @@ jobs:
 
       # Run IntelliJ Plugin Verifier action using GitHub Action
       - name: Verify Plugin
+        env:
+          ORG_GRADLE_PROJECT_rollbarAccessToken: ${{ secrets.ROLLBAR_ACCESS_TOKEN }}
         run: ./gradlew runPluginVerifier -Pplugin.verifier.home.dir=${{ steps.properties.outputs.pluginVerifierHomeDir }}
 
   # Prepare a draft release for GitHub Releases page for the manual verification

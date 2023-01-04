@@ -6,3 +6,8 @@ formatting:
     continuationIndentSize: 8
   ParameterListWrapping:
     indentSize: 8
+  ForbiddenComment:
+    active: false
+  ReturnCount:
+    max: 3 # Default is 2
+

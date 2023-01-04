@@ -2,12 +2,14 @@
 
 # ktlint-intellij-plugin Changelog
 
-## [0.11.0]
+## [Unreleased]
 ### Added
 - Support for IDE version 222.*
 
 ### Changed
-- Upgrade to ktlint 0.47.1
+- Upgrade to ktlint 0.48.0
+- Add new settings UI
+- Add UI for rule management per dataset
 
 ### Deprecated
 

@@ -13,8 +13,8 @@
           <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="strings" key="disabledRulesLabel"/>
-          <toolTipText resource-bundle="strings" key="disabledRulesToolTip"/>
+          <text resource-bundle="locales/ktlintBundle" key="ktlint.conf.disabledRules.title"/>
+          <toolTipText resource-bundle="locales/ktlintBundle" key="ktlint.conf.disabledRules.tooltip"/>
         </properties>
       </component>
       <component id="85c28" class="javax.swing.JCheckBox" binding="enableExperimental">
@@ -22,8 +22,8 @@
           <grid row="2" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="strings" key="experimentalText"/>
-          <toolTipText resource-bundle="strings" key="experimentalToolTip"/>
+          <text resource-bundle="locales/ktlintBundle" key="ktlint.conf.enableExperimental.title"/>
+          <toolTipText resource-bundle="locales/ktlintBundle" key="ktlint.conf.enableExperimental.tooltip"/>
         </properties>
       </component>
       <component id="4b496" class="javax.swing.JCheckBox" binding="enableKtlint">
@@ -32,8 +32,8 @@
         </constraints>
         <properties>
           <selected value="true"/>
-          <text resource-bundle="strings" key="enableKtlintText"/>
-          <toolTipText resource-bundle="strings" key="enableKtlintToolTip"/>
+          <text resource-bundle="locales/ktlintBundle" key="ktlint.conf.enableKtlint.title"/>
+          <toolTipText resource-bundle="locales/ktlintBundle" key="ktlint.conf.enableKtlint.tooltip"/>
         </properties>
       </component>
       <component id="36cbd" class="javax.swing.JLabel">
@@ -41,7 +41,7 @@
           <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="strings" key="editorconfigLabel"/>
+          <text resource-bundle="locales/ktlintBundle" key="ktlint.conf.editorconfigPath.title"/>
         </properties>
       </component>
       <component id="f7c2c" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="editorConfigPath">
@@ -63,8 +63,8 @@
         </constraints>
         <properties>
           <selected value="true"/>
-          <text resource-bundle="strings" key="androidText"/>
-          <toolTipText resource-bundle="strings" key="androidToolTip"/>
+          <text resource-bundle="locales/ktlintBundle" key="ktlint.conf.androidMode.title"/>
+          <toolTipText resource-bundle="locales/ktlintBundle" key="ktlint.conf.androidMode.tooltip"/>
         </properties>
       </component>
       <component id="909eb" class="javax.swing.JLabel">
@@ -72,7 +72,7 @@
           <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="strings" key="rulesetLabel"/>
+          <text resource-bundle="locales/ktlintBundle" key="ktlint.conf.externalJarPaths.title"/>
         </properties>
       </component>
       <component id="c98b6" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="externalJarPaths">
@@ -88,7 +88,7 @@
           <grid row="10" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="strings" key="githubButton"/>
+          <text resource-bundle="locales/ktlintBundle" key="ktlint.conf.reportingButton.text"/>
         </properties>
       </component>
       <grid id="e0fa6" binding="disabledRulesContainer" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -107,8 +107,8 @@
           <grid row="4" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="strings" key="lintAfterFormatText"/>
-          <toolTipText resource-bundle="strings" key="lintAfterFormatTooltip"/>
+          <text resource-bundle="locales/ktlintBundle" key="ktlint.conf.lintAfterReformat.title"/>
+          <toolTipText resource-bundle="locales/ktlintBundle" key="ktlint.conf.lintAfterReformat.tooltip"/>
         </properties>
       </component>
       <component id="6990b" class="com.intellij.openapi.ui.TextFieldWithBrowseButton" binding="baselinePath">
@@ -124,7 +124,7 @@
           <grid row="6" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="strings" key="baselineLabel"/>
+          <text resource-bundle="locales/ktlintBundle" key="ktlint.conf.baselinePath.title"/>
         </properties>
       </component>
       <component id="230ec" class="javax.swing.JComboBox" binding="annotateAs">
@@ -138,7 +138,7 @@
           <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text resource-bundle="strings" key="annotateAsLabel"/>
+          <text resource-bundle="locales/ktlintBundle" key="ktlint.conf.annotationMode.title"/>
         </properties>
       </component>
     </children>

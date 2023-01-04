@@ -1,0 +1,79 @@
+[versions]
+ktlintIJ = "0.11.0" # https://github.com/Pihanya/ktlint-intellij-plugin
+ktlint = "0.48.0" # https://github.com/pinterest/ktlint
+
+rollbarJava = "1.9.0" # https://github.com/rollbar/rollbar-java
+reflections = "0.10.2" # https://github.com/ronmamo/reflections
+kotlinLogging = "3.0.4" # https://github.com/MicroUtils/kotlin-logging
+
+kotlinx-serialization = "1.4.1" # https://github.com/Kotlin/kotlinx.serialization
+kotlinx-coroutines = "1.6.4" # https://github.com/Kotlin/kotlinx.coroutines
+kotlinx-datetime = "0.4.0" # https://github.com/Kotlin/kotlinx-datetime
+
+kotlin = "1.8.0" # https://github.com/JetBrains/kotlin
+java = "11" # https://github.com/adoptium/jdk
+
+gradle = "7.6" # https://github.com/gradle/gradle
+gradlePlugins-jetbrains-intellij = "1.11.0" # https://github.com/JetBrains/gradle-intellij-plugin
+gradlePlugins-jetbrains-changelog = "2.0.0" # https://github.com/JetBrains/gradle-changelog-plugin
+gradlePlugins-buildconfig = "3.1.0" # https://github.com/gmazzo/gradle-buildconfig-plugin
+gradlePlugins-ktlintGradle = "11.0.0" # https://github.com/JLLeitschuh/ktlint-gradle
+gradlePlugins-detekt = "1.22.0" # https://github.com/detekt/detekt
+gradlePlugins-shadow = "7.1.2" # https://github.com/johnrengelman/shadow
+gradlePlugins-spotless = "6.12.0" # https://github.com/diffplug/spotless/tree/main/plugin-gradle
+
+mockk = "1.13.3" # https://github.com/mockk/mockk
+kotest = "5.5.4" # https://github.com/kotest/kotest
+junitJupiter = "5.9.1" # https://github.com/junit-team/junit5
+
+[libraries]
+# Note: This is a not real library. This definition is used in Gradle build scripts:
+#       Group   - used as IJ Plugin Id & Gradle project group & Build Config package name
+#       Name    - used as IJ Plugin Name
+#       Version - used as IJ Plugin Version & Gradle projects version & for determination of channel to publish plugin
+ktlintIJ-pluginDescriptor = { module = "com.pihanya.ktlint:Ktlint", version.ref = "ktlintIJ" }
+
+ktlint-core = { module = "com.pinterest.ktlint:ktlint-core", version.ref = "ktlint" } # https://mvnrepository.com/artifact/com.pinterest.ktlint/ktlint-core
+ktlint-ruleset-standard = { module = "com.pinterest.ktlint:ktlint-ruleset-standard", version.ref = "ktlint" } # https://mvnrepository.com/artifact/com.pinterest.ktlint/ktlint-ruleset-standard
+ktlint-ruleset-experimental = { module = "com.pinterest.ktlint:ktlint-ruleset-experimental", version.ref = "ktlint" } # https://mvnrepository.com/artifact/com.pinterest.ktlint/ktlint-ruleset-experimental
+
+detekt-formatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "gradlePlugins-detekt" } # https://mvnrepository.com/artifact/io.gitlab.arturbosch.detekt/detekt-formatting
+
+rollbarJava = { module = "com.rollbar:rollbar-java", version.ref = "rollbarJava" } # https://mvnrepository.com/artifact/com.rollbar/rollbar-java
+reflections = { module = "org.reflections:reflections", version.ref = "reflections" } # https://mvnrepository.com/artifact/org.reflections/reflections
+
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" } # https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-serialization-json-jvm
+kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" } # https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-core
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" } # https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-datetime
+
+kotlin-compilerEmbeddable = { module = "org.jetbrains.kotlin:kotlin-compiler-embeddable", version.ref = "kotlin" } # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-compiler-embeddable
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" } # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-reflect
+kotlin-stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" } # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib-jdk8
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" } # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-stdlib
+kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" } # https://mvnrepository.com/artifact/org.jetbrains.kotlin/kotlin-test
+
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+
+junitJupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "junitJupiter" }
+junitJupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junitJupiter" }
+
+kotest-assertionsCore = { module = "io.kotest:kotest-assertions-core", version.ref = "kotest" }
+kotest-runnerJunit5 = { module = "io.kotest:kotest-runner-junit5", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotest-frameworkDatatest = { module = "io.kotest:kotest-framework-datatest", version.ref = "kotest" }
+
+[plugins]
+jetbrains-intellij = { id = "org.jetbrains.intellij", version.ref = "gradlePlugins-jetbrains-intellij" } # https://plugins.gradle.org/plugin/org.jetbrains.intellij
+jetbrains-changelog = { id = "org.jetbrains.changelog", version.ref = "gradlePlugins-jetbrains-changelog" } # https://plugins.gradle.org/plugin/org.jetbrains.changelog
+
+buildconfig = { id = "com.github.gmazzo.buildconfig", version.ref = "gradlePlugins-buildconfig" } # https://plugins.gradle.org/plugin/com.github.gmazzo.buildconfig
+
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" } # https://plugins.gradle.org/plugin/org.jetbrains.kotlin.jvm
+kotlin-allopen = { id = "org.jetbrains.kotlin.plugin.allopen", version.ref = "kotlin" } # https://plugins.gradle.org/plugin/org.jetbrains.kotlin.plugin.allopen
+kotlin-noarg = { id = "org.jetbrains.kotlin.plugin.noarg", version.ref = "kotlin" } # https://plugins.gradle.org/plugin/org.jetbrains.kotlin.plugin.noarg
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" } # https://plugins.gradle.org/plugin/org.jetbrains.kotlin.plugin.serialization
+shadow = { id = "com.github.johnrengelman.shadow", version.ref = "gradlePlugins-shadow" } # https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow
+
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "gradlePlugins-detekt" } # https://plugins.gradle.org/plugin/io.gitlab.arturbosch.detekt
+spotless = { id = "com.diffplug.gradle.spotless", version.ref = "gradlePlugins-spotless" } # https://plugins.gradle.org/plugin/com.diffplug.gradle.spotless
+ktlintGradle = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "gradlePlugins-ktlintGradle" } # https://plugins.gradle.org/plugin/org.jlleitschuh.gradle.ktlint

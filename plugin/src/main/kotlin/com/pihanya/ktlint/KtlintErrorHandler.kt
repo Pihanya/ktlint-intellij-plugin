@@ -69,8 +69,11 @@ class KtlintErrorHandler : ErrorReportSubmitter() {
             }.build()
 
             Rollbar.init(config).apply {
-                block(/* rollbar = */ this)
-                close(/* wait = */ true)
+                try {
+                    block(/* rollbar = */ this)
+                } finally {
+                    close(/* wait = */ true)
+                }
             }
         }
     }

@@ -1,3 +1,4 @@
+
 import io.gitlab.arturbosch.detekt.Detekt
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.changelog.Changelog
@@ -94,9 +95,9 @@ buildConfig {
     buildConfigField("String", "PLUGIN_ID", "\"${project.group}\"")
     buildConfigField("String", "PLUGIN_VERSION", "\"${project.version}\"")
     buildConfigField("String", "BUNDLED_KTLINT_VERSION", "\"${libs.versions.ktlint.get()}\"")
-    buildConfigField("String", "ROLLBAR_ACCESS_TOKEN", "\"${project.property("rollbarAccessToken")}\"")
     buildConfigField("String", "REPOSITORY_URL", "\"https://github.com/Pihanya/ktlint-intellij-plugin\"")
     buildConfigField("String", "DONATION_URL", "\"https://buymeacoffee.com/pihanya\"")
+    buildConfigField("String?", "ROLLBAR_ACCESS_TOKEN", "\"${project.property("rollbarAccessToken")}\"")
 }
 
 // Configure gradle-changelog-plugin plugin.

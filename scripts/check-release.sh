@@ -1,11 +1,19 @@
 #!/usr/bin/env bash
 set -euf -o pipefail
 
+if [[ $(basename "$PWD") == "scripts" ]]; then
+    PROJECT_DIR=$(dirname "$PWD")
+else
+    PROJECT_DIR="$PWD"
+fi
+
+PLUGIN_PROPS_FILE="$PROJECT_DIR/plugin.properties"
+
 LATEST_BUILD=$(curl -s 'https://data.services.jetbrains.com/products/releases?code=IIU&release.type=eap%2Crc&latest=true' | jq -r '.IIU[0].build')
 LATEST=$(echo "$LATEST_BUILD" | cut -d . -f 1)
 UNTIL="${LATEST}.*"
 
-CURRENT=$(grep pluginUntilBuild gradle.properties | cut -d '=' -f 2 | xargs)
+CURRENT=$(grep pluginUntilBuild "$PLUGIN_PROPS_FILE" | cut -d '=' -f 2 | xargs)
 
 if [[ "$UNTIL" == "$CURRENT" ]]; then
     echo "Up to date."

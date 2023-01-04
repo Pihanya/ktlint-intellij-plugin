@@ -1,46 +1,44 @@
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
+@Suppress("DSL_SCOPE_VIOLATION") // TODO: Delete after https://github.com/gradle/gradle/issues/22797
 plugins {
-    kotlin("jvm")
     `java-library`
-    id("com.github.johnrengelman.shadow") version "7.1.2"
-}
-
-repositories {
-    mavenCentral()
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.shadow)
 }
 
 dependencies {
-    api("com.pinterest.ktlint:ktlint-core:0.47.1") {
-        exclude("org.slf4j")
+    api(libs.ktlint.core) {
+        exclude(group = "org.slf4j").because("Duplicated in IDE environment")
     }
-    implementation("com.pinterest.ktlint:ktlint-ruleset-standard:0.47.1") {
-        exclude("org.slf4j")
+    implementation(libs.ktlint.ruleset.standard) {
+        exclude(group = "org.slf4j").because("Duplicated in IDE environment")
     }
-    implementation("com.pinterest.ktlint:ktlint-ruleset-experimental:0.47.1") {
-        exclude("org.slf4j")
+    implementation(libs.ktlint.ruleset.experimental) {
+        exclude(group = "org.slf4j").because("Duplicated in IDE environment")
     }
 }
 
 tasks {
-    // Set the compatibility versions to 11
+    val javaVersion = libs.versions.java.get()
+
     withType<JavaCompile> {
-        sourceCompatibility = "11"
-        targetCompatibility = "11"
+        sourceCompatibility = javaVersion
+        targetCompatibility = javaVersion
     }
+
     withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "11"
+        kotlinOptions.jvmTarget = javaVersion
     }
 
     withType<ShadowJar> {
-        val api = project.configurations.api.get()
-        val impl = project.configurations.implementation.get()
+        configurations = listOf(
+            project.configurations.api.get(),
+            project.configurations.implementation.get(),
+        ).onEach { cfg -> cfg.isCanBeResolved = true }
 
-        configurations = listOf(api, impl).map { it.apply { isCanBeResolved = true } }
-
-        // Expose all ruleset implementations:
-        mergeServiceFiles()
+        mergeServiceFiles() // Expose all ruleset implementations
 
         relocate("org.jetbrains.kotlin.psi.KtPsiFactory", "shadow.org.jetbrains.kotlin.psi.KtPsiFactory")
         relocate("org.jetbrains.kotlin.psi.psiUtil", "shadow.org.jetbrains.kotlin.psi.psiUtil")

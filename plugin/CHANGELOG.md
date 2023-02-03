@@ -23,10 +23,6 @@
 ### Changed
 - Upgrade to ktlint 0.48.0
 
-## [0.12.0]
-### Changed
-- Upgrade to ktlint 0.48.0
-
 ## [0.10.0]
 ### Changed
 - Upgrade to ktlint 0.46.1
